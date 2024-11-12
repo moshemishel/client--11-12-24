@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { UseFormRegister, UseFormStateReturn, UseFormSetError, UseFormClearErrors, UseFormSetValue} from 'react-hook-form';
+
 
 const isValidCreditCardNumber = (number: string) => {
     let sum = 0;
@@ -81,7 +83,27 @@ export const defaultValues: Schema = {
     expiryDate: "",
 };
 
+export interface CommonFieldProps {
+    register: UseFormRegister<Schema>;
+    errors: UseFormStateReturn<Schema>['errors'];
+    handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    setCurrentField: (field: string) => void;
+  }
+
+export interface ExpiryDateFieldProps  extends CommonFieldProps{
+    setError: UseFormSetError<Schema>; 
+    clearErrors: UseFormClearErrors<Schema>; 
+    setValue: UseFormSetValue<Schema>; 
+  }
+
+export interface SendButtonFieldProps {
+    isSubmitting: boolean; 
+} 
 
 export type ServerData = {
     approvalNumber: string;
+};
+
+export interface SubmitControl {
+    submitControl: (data: Schema) => void;
 };
