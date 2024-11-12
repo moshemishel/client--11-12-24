@@ -1,11 +1,20 @@
 'use client';
-// import { StyledEngineProvider } from '@mui/material/styles';
-
 import PaymentForm from './components/paymentForm';
-export default function Page() {
+import PaymentConfirm from './components/paymentConfirmation';
+import { ServerData } from '@/types/form/formSchema';
+import { useState } from 'react';
+
+// #url
+export default function checkoutPage() {
+    const [submit, setSubmit] = useState<ServerData | boolean>(false);
+
+    function updateSubmit(data: ServerData){
+        setSubmit(data);
+    }
+
     return (
-        // <StyledEngineProvider >
-        <PaymentForm /> 
-        // </StyledEngineProvider>
+        <div>
+        {submit == false ? (<PaymentForm submitControl={updateSubmit}/>) : (submit && <PaymentConfirm data={submit}/>) }
+        </div>
     );
 }

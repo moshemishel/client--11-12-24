@@ -19,7 +19,7 @@ const isValidCreditCardNumber = (number: string) => {
     return sum % 10 === 0;
 };
 
-export const nameSchema = z.string();
+export const nameSchema = z.string().optional();
 
 export const cardNumberSchema = z.string()
     .min(1, "This field is required")
@@ -43,7 +43,6 @@ export const cvvSchema = z.string()
 
 const expirationDateSchema = z.string()
     .min(1, "This field is required")
-    .regex(/^\d+$/, "The expiration date should contain only numbers")
     .regex(/^\d{2}\/\d{2}$/, "Expiration date must be in the format MM/YY")
     .refine((val) => {
         
@@ -79,5 +78,10 @@ export const defaultValues: Schema = {
     name: "",
     cardNumber: "",
     cvv: "",
-    expiryDate: 'MM/YY',
+    expiryDate: "",
+};
+
+
+export type ServerData = {
+    approvalNumber: string;
 };

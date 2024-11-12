@@ -14,3 +14,21 @@
     margin-top: 16px;
     width: fit-content;
 }
+
+
+.dateInput {
+    font-family: monospace;
+    width: 100px;
+    padding: 5px;
+    letter-spacing: 2px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+.placeholder {
+    color: #ccc;
+  }
+  
+.inputted {
+    color: black;
+  }
