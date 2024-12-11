@@ -1,28 +1,29 @@
-'use client'; 
-// להוסיף שדה לתשלומים
-import { useSearchParams } from 'next/navigation';
+'use client';
 import {useForm} from 'react-hook-form';
 import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import {Schema, schema} from '@/types/forms/payFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {SubmitControl} from '@/types/forms/payFormSchema';
-import ExpiryDateField from './fields/ExpiryDate';
-import NameField from './fields/Name';
-import CardNumberField from './fields/CardNumber';
-import SendButtonField from './fields/SendButton';
-import CvvField from './fields/CVV';
-import IdField from './fields/Id';
-import styles from './paymentForm.module.css';
+
+import AmountField from './components/Amount';
+import CurrencyField from './components/Currency';
+import InstallmentsField from './components/Installments';
+
+import ExpiryDateField from '@/app/checkout/components/fields/ExpiryDate';
+import NameField from '@/app/checkout/components/fields/Name';
+import CardNumberField from '@/app/checkout/components/fields/CardNumber';
+import SendButtonField from '@/app/checkout/components/fields/SendButton';
+import CvvField from '@/app/checkout/components/fields/CVV';
+import IdField from '@/app/checkout/components/fields/Id';
+import styles from '@/app/checkout/components/paymentForm.module.css';
 
 
 
 
 export default function paymentForm({submitControl}: SubmitControl) {
     
-    const searchParams = useSearchParams();
- 
-    const { saleAmount, storeName, currency, token } = Object.fromEntries(searchParams);
+    
 
 
     const {register, handleSubmit, setError, clearErrors, setValue, formState: {errors, isSubmitting}} = useForm<Schema>({
@@ -39,11 +40,14 @@ export default function paymentForm({submitControl}: SubmitControl) {
    
     
     const refs = {
+        amount:useRef<HTMLInputElement>(null),
+        currency:useRef<HTMLSelectElement>(null),
         name:useRef<HTMLInputElement>(null),
         cardNumber:useRef<HTMLInputElement>(null),
         cvv:useRef<HTMLInputElement>(null),
         expiryDate:useRef<HTMLInputElement>(null),
         id:useRef<HTMLInputElement>(null),
+        installments:useRef<HTMLInputElement>(null),
         submit:useRef<HTMLButtonElement>(null),
     };
     
@@ -51,7 +55,7 @@ export default function paymentForm({submitControl}: SubmitControl) {
         refs.name.current?.focus();
     },[])
     
-    function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>, nextRef:  React.RefObject<HTMLInputElement | HTMLButtonElement | HTMLSelectElement>
+    function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>, nextRef:  React.RefObject<HTMLInputElement | HTMLSelectElement| HTMLButtonElement>
     ){
         if (e.key === 'Enter' && nextRef.current) {
             e.preventDefault();
@@ -73,12 +77,23 @@ export default function paymentForm({submitControl}: SubmitControl) {
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
     >
-        <div className={styles.amountContainer}>
-            <span className={styles.amountLabel}>Amount to Pay: </span>
-            <span className={styles.amountValue}>{`${currency} ${saleAmount}`}</span>
-        </div>
         
+        <AmountField
+          ref={refs.amount}
+          register={register}        
+          errors={errors}            
+          handleKeyDown={handleKeyDown}
+          nextRef={refs.currency}
+        />
 
+        <CurrencyField 
+          ref={refs.currency}
+          register={register}        
+          errors={errors}            
+          handleKeyDown={handleKeyDown}
+          nextRef={refs.name}
+        />
+      
         <NameField
             ref={refs.name}
             register={register}        
@@ -122,10 +137,18 @@ export default function paymentForm({submitControl}: SubmitControl) {
             register={register} 
             errors={errors}
             handleKeyDown={handleKeyDown}
-            nextRef={refs.submit}
+            nextRef={refs.installments}
             setError={setError}
             clearErrors={clearErrors}
             setValue={setValue} 
+        />
+
+        <InstallmentsField 
+          ref={refs.installments}
+          register={register}        
+          errors={errors}            
+          handleKeyDown={handleKeyDown}
+          nextRef={refs.submit}
         />
 
         <SendButtonField ref={refs.submit} isSubmitting={isSubmitting} innerText={"Pay"} />

@@ -1,4 +1,4 @@
-import { ServerData } from '@/types/form/formSchema';
+import { ServerData } from '@/types/forms/payFormSchema';
 
 interface PageProps {
     data: ServerData;

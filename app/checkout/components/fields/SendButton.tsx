@@ -2,11 +2,12 @@ import { forwardRef } from 'react';
 import styles from '../paymentForm.module.css';
 import SendIcon from '@mui/icons-material/Send';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {SendButtonFieldProps} from '@/types/form/formSchema'
+import {SendButtonFieldProps} from '@/types/forms/payFormSchema'
 
-const SendButtonField = forwardRef<HTMLInputElement, SendButtonFieldProps>(({ isSubmitting }, ref) => {
+const SendButtonField = forwardRef<HTMLButtonElement, SendButtonFieldProps>(({ isSubmitting, innerText}, ref) => {
   return (
     <LoadingButton
+      ref={ref}
       size="small"
       type="submit"
       endIcon={<SendIcon />}
@@ -15,7 +16,7 @@ const SendButtonField = forwardRef<HTMLInputElement, SendButtonFieldProps>(({ is
       variant="contained"
       className={styles.submitButton}
     >
-      Pay
+      {innerText}
     </LoadingButton>
   );
 });

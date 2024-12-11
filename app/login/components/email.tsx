@@ -1,40 +1,38 @@
 import { forwardRef } from 'react';
-import styles from '../paymentForm.module.css';
+import styles from '../login.module.css';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import Tooltip from '@mui/material/Tooltip';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { CommonFieldProps as  NameFieldProps } from '@/types/forms/payFormSchema';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { CommonFieldProps as  EmailFieldProps } from '@/types/forms/loginFormSchema';
 
-const NameField = forwardRef<HTMLInputElement, NameFieldProps>(({
+const Email = forwardRef<HTMLInputElement, EmailFieldProps>(({
   register, 
   errors, 
   handleKeyDown,
   nextRef, 
 }, ref) => (
-  <Tooltip title="Name as it appears on the CreditCard" placement="bottom-start" arrow enterDelay={500}>
     <span>
       <TextField
-        {...register("name")}
+        {...register("email")}
         inputRef={ref} 
         variant="outlined"
-        name="name"
-        label="Name"
+        name="email"
+        label="Email"
         className={styles.textField}
-        error={!!errors.name}  
-        helperText={errors.name?.message}
+        error={!!errors.email}  
+        helperText={errors.email?.message}
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>)=> {
           handleKeyDown(e , nextRef)}}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start" style={{ pointerEvents: "none" }}>
-              <AccountCircleIcon /> 
+              <MailOutlineIcon /> 
             </InputAdornment>
           )
         }}  
       />
     </span>
-  </Tooltip>
+ 
 ));
 
-export default NameField;
+export default Email;

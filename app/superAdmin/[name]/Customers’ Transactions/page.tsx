@@ -1,5 +1,5 @@
 export default function Page() {
     return (
-        <div>דף הבית</div>
+        <div>dashboard super admin</div>
     );
 }

@@ -1,5 +1,5 @@
 export default function Page() {
     return (
-        <div>דף הבית</div>
+        <div>register form page</div>
     );
 }
