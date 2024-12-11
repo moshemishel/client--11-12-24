@@ -18,10 +18,8 @@ if (publicPathsRegex.test(pathname)) {
     return NextResponse.next();
 }
     
-    // const user = getAuthCookie();
-    const user = {name:'moshe', role: 100, id: 'moshe1'}
+    const user = getAuthCookie();
     
-
     if (!user) {
         const loginUrl = new URL('/login', request.url);
         loginUrl.searchParams.set('reason', 'login_required');
