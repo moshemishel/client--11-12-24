@@ -25,4 +25,9 @@ export const getAuthCookie = (): User | null => {
 
 export const removeAuthCookie = (): void => {
   Cookies.remove(COOKIE_NAME);
+  window.location.replace('/login');
+
 };
+
+
+

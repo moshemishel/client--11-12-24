@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
  
-    const publicPathsRegex = /^\/(login|register|checkout|superAdmin\/login|userConflict)$/;
+    const publicPathsRegex = /^\/(login|register|checkout|userConflict)$/;
 
 if (publicPathsRegex.test(pathname)) {
     return NextResponse.next();

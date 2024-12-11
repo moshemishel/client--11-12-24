@@ -2,7 +2,7 @@ import { Tab, Tabs } from "@mui/material";
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import getPagesByRole from '@/context/pagesByRole';
+import getPagesByRole from '@/components/tabsByRole';
 import {PagesByRole} from '@/types/context/AuthContext';
 
 
