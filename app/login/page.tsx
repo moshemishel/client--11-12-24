@@ -1,21 +1,23 @@
 "use client";
 import { useEffect, useRef } from "react";
-// import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation';
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ReasonMessage from "./components/reasonMassage";
 import Email from "./components/email";
 import Password from "./components/password";
 import styles from "./login.module.css";
 import { Schema, schema } from "@/types/forms/loginFormSchema";
 import SendButtonField from "../checkout/components/fields/SendButton";
 import {useAuth} from '@/context/AuthContext';
-// import { toast } from "sonner";
+
 
 export default function Login() {
     const {user , login} = useAuth();
 
-    // const router = useRouter();
+    const searchParams = useSearchParams();
+    const reason = searchParams.get('reason') || null;
 
     const {
         register,
@@ -116,6 +118,8 @@ export default function Login() {
     };
 
     return (
+        <>
+        {!!reason && <ReasonMessage reason={reason}/>}
         <Box
             component="form"
             className={styles.formContainer}
@@ -152,5 +156,6 @@ export default function Login() {
                 innerText={"Send"}
             />
         </Box>
+        </>
     );
 }

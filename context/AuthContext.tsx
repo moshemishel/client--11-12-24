@@ -16,7 +16,7 @@ export const AuthProvider: React.FC< {children: React.ReactNode}> = ({children})
         if (userData) {
             setUser(userData); 
         }
-        console.log("auth running 1 time");
+        // console.log("auth running 1 time");
         
     }, []);
         

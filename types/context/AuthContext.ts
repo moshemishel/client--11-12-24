@@ -16,3 +16,5 @@ export type PagesByRole = {
     name: string;
     link: string;
 }[];
+
+export type TabsByRole = PagesByRole
