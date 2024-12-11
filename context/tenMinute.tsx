@@ -1,42 +1,42 @@
 import { useEffect } from 'react';
-import { getAuthCookie, setAuthCookie, removeAuthCookie } from './cookieUtils'; 
 import { useRouter } from 'next/navigation';
-
+import {useAuth} from './AuthContext'
 const useIdleLogout = () => {
   const router = useRouter();
+  const {logout} = useAuth()
   
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    let lastActivityTime = Date.now(); 
+    let lastActivityTime = Date.now();
+
+  
 
     const handleActivity = () => {
       const currentTime = Date.now();
-      
-      if (currentTime - lastActivityTime > 5 * 60 * 1000) {
-        const user = getAuthCookie();
-        if (user) {
-          setAuthCookie(user);
-        }
-      }
+      const idleTime = currentTime - lastActivityTime;
+
       lastActivityTime = currentTime;
 
       clearTimeout(timeout);
+
       timeout = setTimeout(() => {
-        removeAuthCookie();
-        router.replace('/login'); 
-      }, 10 * 60 * 1000); 
+
+        logout();
+        router.replace('/login?reason=seesion-expired')
+      }, 10 * 60 * 1000);
     };
 
     window.addEventListener('mousemove', handleActivity);
     window.addEventListener('keydown', handleActivity);
-    
+    window.addEventListener('scroll', handleActivity);
+
     return () => {
       clearTimeout(timeout);
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('keydown', handleActivity);
+      window.removeEventListener('scroll', handleActivity);
     };
   }, [router]);
-
 };
 
 export default useIdleLogout;
