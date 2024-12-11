@@ -2,14 +2,14 @@ import { Tab, Tabs } from "@mui/material";
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import getPagesByRole from '@/components/tabsByRole';
+import getTabsByRole from '@/components/tabsByRole';
 import {PagesByRole} from '@/types/context/AuthContext';
 
 
 const userTabs = () =>{
     const { user } = useAuth();
     const router = useRouter();
-    const pages: PagesByRole = getPagesByRole(user);
+    const pages: PagesByRole = getTabsByRole(user);
 
 
     const pathname = usePathname();
